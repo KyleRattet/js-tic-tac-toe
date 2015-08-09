@@ -29,6 +29,7 @@ Game.prototype.updateScore = function () {
 
 Game.prototype.init = function () {
   //revisit after declaring other classes/methods
+  this.currentPlayer = this.player1;
 
 };
 
@@ -54,27 +55,48 @@ var Board = function () {
 };
 
 //Board Methods
-Board.prototype.makeMove = function() {
+Board.prototype.makeMove = function(cellNumberID, team) {
   //starting point
   //when box is clicked, grab the boxes id, update box contents with X or O and update the move array
   //make sure box isn't occupied, conditional checking for null or 'X'or 'O'
 
-  // var cellNumberID = ($(this).attr('id'));
-
-  console.log("make move test test test");
-  this.moveArr[0] = "test index";
-  // this.moveArr[cellNumberID] = game.currentPlayer.team;
+  this.moveArr[cellNumberID] = team;
   console.log("this moveArr", this.moveArr);
+  console.log(cellNumberID);
 
 };
 
-Board.prototype.winCondition = function() {
+Board.prototype.winCondition =
   ///create an array of win conditions
   //will end up being an array of eight arrays i.e. [[1,2,3], [4,5,6], etc ...]
-};
+  [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+  ];
 
-Board.prototype.checkWinner = function() {
+
+Board.prototype.checkWinner = function(team) {
   //comparing moveArr of each player to the win condition array, only on the current players move
+  // var result = false;
+  for (var i = 0; i < this.winCondition.length; i++) {
+
+  if  ((this.moveArr[this.winCondition[i][0]] === team) &&
+      (this.moveArr[this.winCondition[i][1]] === team) &&
+      (this.moveArr[this.winCondition[i][2]] === team))  {
+      console.log("winner");
+
+    } else {
+      console.log("no");
+    }
+
+  }
+
 };
 
 Board.prototype.resetBoard = function() {
@@ -95,12 +117,20 @@ $(document).on('ready', function() {
 
 $('.box').on('click', function () {
   //fire game.nextPlayer
-  game.nextPlayer();
-  // console.log(game.currentPlayer);
-  var cellNumberID = ($(this).attr('id'));
-  $(this).html(game.currentPlayer.team);
-  console.log("cell number ID ", cellNumberID);
-  game.board.makeMove(cellNumberID);
+  console.log($(this).html());
+  if ($(this).html() === '&nbsp;') {
+    $(this).html(game.currentPlayer.team);
+    var cellNumberID = ($(this).attr('id'));
+
+    game.board.makeMove(cellNumberID, game.currentPlayer.team);
+
+    game.board.checkWinner(game.currentPlayer.team);
+    game.nextPlayer();
+  } else {
+    alert ("occupied");
+  }
+
+
 
   });
 
