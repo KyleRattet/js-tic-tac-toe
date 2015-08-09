@@ -58,17 +58,14 @@ Board.prototype.makeMove = function() {
   //starting point
   //when box is clicked, grab the boxes id, update box contents with X or O and update the move array
   //make sure box isn't occupied, conditional checking for null or 'X'or 'O'
-  $('.box').on('click', function () {
-  //fire game.nextPlayer
-  game.nextPlayer();
-  game.board.makeMove();
-  console.log(game.currentPlayer);
-  $(this).html(game.currentPlayer.team);
-  var cellNumberID = ($(this).attr('id'));
-  console.log(cellNumberID);
-  });
-  console.log("make move test");
-  this.moveArr[0] = game.currentPlayer.team;
+
+  // var cellNumberID = ($(this).attr('id'));
+
+  console.log("make move test test test");
+  this.moveArr[0] = "test index";
+  // this.moveArr[cellNumberID] = game.currentPlayer.team;
+  console.log("this moveArr", this.moveArr);
+
 };
 
 Board.prototype.winCondition = function() {
@@ -94,9 +91,18 @@ Board.prototype.nullArray = function() {
 $(document).on('ready', function() {
   // body...
  var game = new Game ();
- // game.init()
+ game.init();
 
+$('.box').on('click', function () {
+  //fire game.nextPlayer
+  game.nextPlayer();
+  // console.log(game.currentPlayer);
+  var cellNumberID = ($(this).attr('id'));
+  $(this).html(game.currentPlayer.team);
+  console.log("cell number ID ", cellNumberID);
+  game.board.makeMove(cellNumberID);
 
+  });
 
 
 });
