@@ -16,11 +16,11 @@ Game.prototype.nextPlayer = function () {
   if (this.turnCounter === 1) {
     this.turnCounter = 2;
     this.currentPlayer = this.player2;
-    $('#your-turn').html("Player X");
+    $('#your-turn').html("Player O");
   } else {
     this.turnCounter = 1;
     this.currentPlayer = this.player1;
-    $('#your-turn').html("Player O");
+    $('#your-turn').html("Player X");
   }
 };
 
