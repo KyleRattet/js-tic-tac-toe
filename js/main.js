@@ -16,15 +16,18 @@ Game.prototype.nextPlayer = function () {
   if (this.turnCounter === 1) {
     this.turnCounter = 2;
     this.currentPlayer = this.player2;
+    $('#your-turn').html("Player X");
   } else {
     this.turnCounter = 1;
     this.currentPlayer = this.player1;
+    $('#your-turn').html("Player O");
   }
 };
 
 Game.prototype.updateScore = function () {
   //updates DOM indicating which player won
   //update counter scoreboard (probably on player constructor)
+
 };
 
 Game.prototype.init = function () {
@@ -83,19 +86,37 @@ Board.prototype.winCondition =
 
 Board.prototype.checkWinner = function(team) {
   //comparing moveArr of each player to the win condition array, only on the current players move
-  // var result = false;
+  var hasWinner = false;
   for (var i = 0; i < this.winCondition.length; i++) {
 
-  if  ((this.moveArr[this.winCondition[i][0]] === team) &&
+    if (
+      (this.moveArr[this.winCondition[i][0]] === team) &&
       (this.moveArr[this.winCondition[i][1]] === team) &&
-      (this.moveArr[this.winCondition[i][2]] === team))  {
-      console.log("winner");
-
-    } else {
-      console.log("no");
-    }
+      (this.moveArr[this.winCondition[i][2]] === team)
+      )  {
+        hasWinner = true;
+      }
 
   }
+
+ if (hasWinner) {
+
+      alert ("Team " +team+ " wins!");
+      if (team === 'X') {
+         var oneScoreTotal = parseInt($('#oneScore').html());
+         $('#oneScore').html(oneScoreTotal + 1);
+      }
+      else if (team === 'O') {
+         var twoScoreTotal = parseInt($('#twoScore').html());
+         $('#twoScore').html(twoScoreTotal + 1);
+      }
+
+      this.resetBoard();
+    }
+
+
+
+
 
 };
 
@@ -104,6 +125,13 @@ Board.prototype.resetBoard = function() {
   //reset turn counter to 1
   //clear out the DOM
   //could use nullArray method, or abstract it out
+  this.moveArr = [
+      null, null, null,
+      null, null, null,
+      null, null, null
+  ];
+  this.turnCounter = 1;
+  $('.box').html('&nbsp;');
 };
 
 Board.prototype.nullArray = function() {
@@ -121,11 +149,10 @@ $('.box').on('click', function () {
   if ($(this).html() === '&nbsp;') {
     $(this).html(game.currentPlayer.team);
     var cellNumberID = ($(this).attr('id'));
-
     game.board.makeMove(cellNumberID, game.currentPlayer.team);
-
     game.board.checkWinner(game.currentPlayer.team);
     game.nextPlayer();
+
   } else {
     alert ("occupied");
   }
@@ -134,13 +161,18 @@ $('.box').on('click', function () {
 
   });
 
+//reset button
+$('.reset').on('click', function() {
+  $('#oneScore').html(0);
+  $('#twoScore').html(0);
+  game.board.resetBoard();
+
+
 
 });
-// event handler for adding an X or O to box
-  // on click
-  // grab id
-  // fire the makeMove method, passing in the id
-    // update the moveArr
-    // ensure that you don't update a box already occupired by an X or O
+
+
+});
+
 
 
