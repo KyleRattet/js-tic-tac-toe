@@ -24,16 +24,16 @@ Game.prototype.nextPlayer = function () {
   }
 };
 
-Game.prototype.updateScore = function () {
-  //updates DOM indicating which player won
-  //update counter scoreboard (probably on player constructor)
 
-};
+// Game.prototype.updateScore = function () {
+/// add this funcitonality into checkWinner method
+//   //updates DOM indicating which player won
+//   //update counter scoreboard (probably on player constructor)
+
+// };
 
 Game.prototype.init = function () {
-  //revisit after declaring other classes/methods
   this.currentPlayer = this.player1;
-
 };
 
 //Player Constructor
@@ -53,8 +53,6 @@ var Board = function () {
       null, null, null,
       null, null, null
   ];
-  this.$cells = $('.box');
-  //add eventhandler for resetting the board
 };
 
 //Board Methods
@@ -141,12 +139,11 @@ Board.prototype.nullArray = function() {
 };
 
 $(document).on('ready', function() {
-  // body...
+
  var game = new Game ();
  game.init();
 
 $('.box').on('click', function () {
-  //fire game.nextPlayer
   console.log($(this).html());
   if ($(this).html() === '&nbsp;') {
     $(this).html(game.currentPlayer.team);
