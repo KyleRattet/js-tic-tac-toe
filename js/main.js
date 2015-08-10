@@ -114,9 +114,11 @@ Board.prototype.checkWinner = function(team) {
       this.resetBoard();
     }
 
-
-
-
+  //tie scenario
+  if(this.moveArr.indexOf(null) === -1) {
+  alert('tie');
+  this.resetBoard();
+  }
 
 };
 
