@@ -8,10 +8,6 @@ var Game = function () {
 
 //Game Methods
 Game.prototype.nextPlayer = function () {
-  //update the turnCounter based on next player
-  //check winner (fire method on board class)
-  //update dom indicating who is playing
-
   //assinging current player
   if (this.turnCounter === 1) {
     this.turnCounter = 2;
@@ -25,13 +21,6 @@ Game.prototype.nextPlayer = function () {
 };
 
 
-// Game.prototype.updateScore = function () {
-/// add this funcitonality into checkWinner method
-//   //updates DOM indicating which player won
-//   //update counter scoreboard (probably on player constructor)
-
-// };
-
 Game.prototype.init = function () {
   this.currentPlayer = this.player1;
 };
@@ -40,7 +29,6 @@ Game.prototype.init = function () {
 var Player = function (team, cellID) {
   //specifying 'X' or 'O'
   this.team = team;
-  //span id onescore or twoscore
   this.cellID = cellID;
   this.playerScore = 0;
 };
@@ -57,10 +45,6 @@ var Board = function () {
 
 //Board Methods
 Board.prototype.makeMove = function(cellNumberID, team) {
-  //starting point
-  //when box is clicked, grab the boxes id, update box contents with X or O and update the move array
-  //make sure box isn't occupied, conditional checking for null or 'X'or 'O'
-
   this.moveArr[cellNumberID] = team;
   console.log("this moveArr", this.moveArr);
   console.log(cellNumberID);
@@ -69,7 +53,7 @@ Board.prototype.makeMove = function(cellNumberID, team) {
 
 Board.prototype.winCondition =
   ///create an array of win conditions
-  //will end up being an array of eight arrays i.e. [[1,2,3], [4,5,6], etc ...]
+
   [
     [0,1,2],
     [3,4,5],
@@ -83,7 +67,7 @@ Board.prototype.winCondition =
 
 
 Board.prototype.checkWinner = function(team) {
-  //comparing moveArr of each player to the win condition array, only on the current players move
+
   var hasWinner = false;
   for (var i = 0; i < this.winCondition.length; i++) {
 
@@ -121,10 +105,7 @@ Board.prototype.checkWinner = function(team) {
 };
 
 Board.prototype.resetBoard = function() {
-  //empty out the board array, resetting moveArr to all null
-  //reset turn counter to 1
-  //clear out the DOM
-  //could use nullArray method, or abstract it out
+
   this.moveArr = [
       null, null, null,
       null, null, null,
